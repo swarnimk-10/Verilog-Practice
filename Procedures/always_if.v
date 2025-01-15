@@ -1,4 +1,3 @@
-// synthesis verilog_input_version verilog_2001
 module top_module(
     input a,
     input b,
@@ -6,13 +5,13 @@ module top_module(
     input sel_b2,
     output wire out_assign,
     output reg out_always   ); 
-    assign out_assign = (sel_b1==1 && sel_b2==1) ? b:a;
     always@(*) begin
-        if(sel_b1==1 && sel_b2==1) begin
-            out_always = b;
-        end
-        else begin
-            out_always = a;
-        end
+        case ({sel_b1, sel_b2})
+            2'b00: out_always = a;
+            2'b01: out_always = a;
+            2'b10: out_always = a;
+            2'b11: out_always = b;
+        endcase
     end
+    assign out_assign = (sel_b1 == 1 && sel_b2==1)?b:a;
 endmodule
